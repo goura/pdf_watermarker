@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "pdf-watermarker"
+version = "0.1.0"
+description = "A simple GUI application to add text watermarks to PDF files with optional password protection."
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+PyPDF2 = "3.0.1"
+reportlab = "4.0.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api" 

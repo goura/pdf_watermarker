@@ -4,9 +4,8 @@ from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import io
-import os
 import logging
-from typing import Optional, Tuple, BinaryIO
+from typing import Tuple, BinaryIO
 from dataclasses import dataclass
 
 # Configure logging
@@ -75,16 +74,17 @@ class PDFWatermarker:
         alpha_frame = tk.Frame(self.root)
         alpha_frame.pack(pady=10)
         tk.Label(alpha_frame, text="Transparency:").pack(side=tk.LEFT)
-        self.alpha_label = tk.Label(alpha_frame, text="0.2")
+        self.alpha_label = tk.Label(alpha_frame, text=f"{int(self.alpha_value.get() * 100)}%")
         self.alpha_label.pack(side=tk.RIGHT, padx=5)
         tk.Scale(
             alpha_frame,
-            from_=0.1,
+            from_=0.05,
             to=1.0,
-            resolution=0.1,
+            resolution=0.05,
             orient=tk.HORIZONTAL,
             variable=self.alpha_value,
-            command=self.update_alpha_label
+            command=self.update_alpha_label,
+            showvalue=False
         ).pack(side=tk.LEFT, fill=tk.X, expand=True)
         
         # Password protection
@@ -102,7 +102,8 @@ class PDFWatermarker:
         Args:
             value: The new alpha value as a string
         """
-        self.alpha_label.config(text=f"{float(value):.1f}")
+        percentage = int(float(value) * 100)
+        self.alpha_label.config(text=f"{percentage}%")
     
     def browse_file(self) -> None:
         """Open a file dialog to select a PDF file."""
